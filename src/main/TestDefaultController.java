@@ -84,6 +84,25 @@ public class TestDefaultController {
 	
 	
 	
+	@Test(timeout=30)
+	public void testProcessMultipleRequestsTimeout() throws Exception {
+		
+		Request request;
+		Response response = new SampleResponse();
+		RequestHandler handler = new SampleHandler();
+		for(int i=0; i< 99999; i++)
+		{
+			request = new SampleRequest(String.valueOf(i));
+			controller.addHandler(request, handler);
+			response = controller.processRequest(request);
+			assertNotNull(response);
+			assertNotSame(ErrorResponse.class, response.getClass());			
+		}
+	}
+	
+	
+	
+	
 	
 	private class SampleRequest implements Request
 	{
