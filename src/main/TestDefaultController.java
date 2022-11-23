@@ -39,6 +39,18 @@ public class TestDefaultController {
 	}
 	
 	
+	@Test
+	public void testProcessRequest() throws Exception {
+		
+		Request request = new SampleRequest();
+		RequestHandler handler = new SampleHandler();
+		controller.addHandler(request, handler);
+		Response response = controller.processRequest(request);
+		assertNotNull("Must not return a null response", response) ;
+		assertEquals("Response should be of type SampleResponse", SampleResponse.class, response.getClass());
+	}
+	
+	
 	
 	
 	
