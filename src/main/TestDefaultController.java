@@ -53,7 +53,7 @@ public class TestDefaultController {
 	@Test
 	public void testProcessRequestAnswersErrorResponse() throws Exception {
 		
-		SampleRequest request = new SampleRequest();
+		SampleRequest request = new SampleRequest("testError");
 		SampleExceptionHandler handler = new SampleExceptionHandler();
 		controller.addHandler(request, handler);
 		Response response = controller.processRequest(request);
@@ -67,11 +67,24 @@ public class TestDefaultController {
 	
 	private class SampleRequest implements Request
 	{
+		private static final String DEFAULT_NAME = "Test";
+		
+		private String name;
+				
+		public SampleRequest(String name)
+		{
+			this.name = name;
+		}
+		
+		public SampleRequest()
+		{
+			this(DEFAULT_NAME);
+		}
 
 		@Override
 		public String getName() {
 			// TODO Auto-generated method stub
-			return "Test";
+			return this.name;
 		}
 		
 	}
