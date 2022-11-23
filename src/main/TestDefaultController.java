@@ -8,14 +8,18 @@ import org.junit.Test;
 public class TestDefaultController {
 
 	private DefaultController controller;
+	private Request request;
+	private RequestHandler handler;
 	
 	
 	
 	@Before
-    public void instantiate() throws Exception
+    public void initialize() throws Exception
     {
         controller = new DefaultController();
-      
+        request = new SampleRequest();
+        handler = new SampleHandler();
+        controller.addHandler (request, handler);      
     }
 	
 	
@@ -30,9 +34,6 @@ public class TestDefaultController {
 	@Test
 	public void testAddHandler() throws Exception {
 		
-		Request request = new SampleRequest();
-		RequestHandler handler = new SampleHandler();
-		controller.addHandler(request, handler);
 		RequestHandler handler2 = controller.getHandler(request);
 		assertSame ("Handler we set in controller should "
 				+ "be the same handler we get", handler2, handler);
@@ -42,9 +43,6 @@ public class TestDefaultController {
 	@Test
 	public void testProcessRequest() throws Exception {
 		
-		Request request = new SampleRequest();
-		RequestHandler handler = new SampleHandler();
-		controller.addHandler(request, handler);
 		Response response = controller.processRequest(request);
 		assertNotNull("Must not return a null response", response) ;
 		assertEquals("Response should be of type SampleResponse", SampleResponse.class, response.getClass());
