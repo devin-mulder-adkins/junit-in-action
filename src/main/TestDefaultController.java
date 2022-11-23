@@ -63,6 +63,26 @@ public class TestDefaultController {
 	
 	
 	
+	@Test(expected=RuntimeException.class)
+	public void testGetHandlerNotDefined() throws Exception {
+		
+		SampleRequest request = new SampleRequest("testNotDefined");
+		// 다음 줄에서 RuntimeException을 발생시킬 것이다.
+		controller.getHandler(request);
+	}
+	
+	
+	@Test(expected=RuntimeException.class)
+	public void testAddRequestDuplicateName() throws Exception {
+		
+		SampleRequest request = new SampleRequest();
+		SampleHandler handler = new SampleHandler();
+		// 다음 줄에서 RuntimeException을 발생시킬 것이다.
+		controller.addHandler(request, handler);
+	}
+	
+	
+	
 	
 	
 	private class SampleRequest implements Request
