@@ -50,6 +50,19 @@ public class TestDefaultController {
 	
 	
 	
+	@Test
+	public void testProcessRequestAnswersErrorResponse() throws Exception {
+		
+		SampleRequest request = new SampleRequest();
+		SampleExceptionHandler handler = new SampleExceptionHandler();
+		controller.addHandler(request, handler);
+		Response response = controller.processRequest(request);
+		assertNotNull("Must not return a null response", response);
+		assertEquals(ErrorResponse.class, response.getClass());
+	}
+	
+	
+	
 	
 	
 	private class SampleRequest implements Request
@@ -74,6 +87,18 @@ public class TestDefaultController {
 		}
 		
 	}
+	
+	
+	
+	private class SampleExceptionHandler implements RequestHandler
+	{
+		public Response process (Request request) throws Exception
+		{
+			throw new Exception ("error processing request");
+		}
+	}
+	
+	
 	
 	
 	private class SampleResponse implements Response
